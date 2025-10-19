@@ -1,9 +1,9 @@
 class Jjfs < Formula
   desc "Eventually consistent multi-mount filesystem using Jujutsu"
   homepage "https://github.com/jtippett/jjfs"
-  version "0.1.1"
+  version "0.1.2"
   url "https://github.com/jtippett/jjfs.git",
-      revision: "6b7b702e4c8e1c29947b2e46a517cd3ba6e17710"
+      revision: "cc8433915acda3f3084a65be9f85801e7212aa5c"
   license "MIT"
 
   depends_on "crystal"
@@ -18,6 +18,9 @@ class Jjfs < Formula
   end
 
   def install
+    # Create bin directory for build
+    mkdir_p "bin"
+
     # Build both binaries
     system "crystal", "build", "src/jjfs.cr", "-o", "bin/jjfs", "--release"
     system "crystal", "build", "src/jjfsd.cr", "-o", "bin/jjfsd", "--release"
@@ -35,6 +38,10 @@ class Jjfs < Formula
     doc.install "docs/user-guide.md"
   end
 
+  def post_install
+    ohai "jjfs installed successfully!"
+  end
+
   def caveats
     s = <<~EOS
       To get started:
@@ -44,6 +51,10 @@ class Jjfs < Formula
         4. Open a mount: jjfs open default
 
       Note: bindfs requires macFUSE to be installed separately.
+
+      After upgrading, restart the daemon to use the new version:
+        jjfs stop
+        jjfs start
 
       For more information, see:
         #{doc}/README.md
@@ -68,7 +79,7 @@ class Jjfs < Formula
 
   test do
     # Test that binaries run and show version
-    assert_match "jjfs v0.1.1", shell_output("#{bin}/jjfs 2>&1")
+    assert_match "jjfs v0.1.2", shell_output("#{bin}/jjfs 2>&1")
 
     # Test init command (in temporary directory)
     system bin/"jjfs", "init", "test-repo"
