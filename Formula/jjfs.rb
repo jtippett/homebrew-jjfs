@@ -3,7 +3,7 @@ class Jjfs < Formula
   homepage "https://github.com/jtippett/jjfs"
   version "0.1.0"
   url "https://github.com/jtippett/jjfs.git",
-      revision: "c0535b95c7ecaa43492305fb98218ca7080310b0581c4b9cdfdd998b30d8fb2a421aee9698ce8aca9123c8ae8f495275ec447077"
+      revision: "421aee9698ce8aca9123c8ae8f495275ec447077"
   license "MIT"
 
   depends_on "crystal"
