@@ -6,7 +6,7 @@ This repository contains the Homebrew formula for jjfs, an eventually consistent
 
 ```bash
 # Add this tap
-brew tap yourusername/jjfs
+brew tap jtippett/jjfs
 
 # Install jjfs
 brew install jjfs
@@ -15,7 +15,7 @@ brew install jjfs
 Or install directly:
 
 ```bash
-brew install yourusername/jjfs/jjfs
+brew install jtippett/jjfs/jjfs
 ```
 
 ## Usage
@@ -34,7 +34,7 @@ jjfs open my-notes ~/Documents/notes
 jjfs open my-notes ~/Desktop/quick-notes
 ```
 
-See the [main documentation](https://github.com/yourusername/jjfs) for more details.
+See the [main documentation](https://github.com/jtippett/jjfs) for more details.
 
 ## Updating
 
