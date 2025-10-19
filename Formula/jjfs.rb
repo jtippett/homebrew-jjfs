@@ -18,6 +18,9 @@ class Jjfs < Formula
   end
 
   def install
+    # Create bin directory for build
+    mkdir_p "bin"
+
     # Build both binaries
     system "crystal", "build", "src/jjfs.cr", "-o", "bin/jjfs", "--release"
     system "crystal", "build", "src/jjfsd.cr", "-o", "bin/jjfsd", "--release"
