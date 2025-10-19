@@ -5,17 +5,15 @@ This repository contains the Homebrew formula for jjfs, an eventually consistent
 ## Installation
 
 ```bash
-# Add this tap
-brew tap jtippett/jjfs
-
-# Install jjfs
-brew install jjfs
+# Install jjfs (taps automatically)
+brew install jtippett/jjfs
 ```
 
-Or install directly:
+Or tap first, then install:
 
 ```bash
-brew install jtippett/jjfs/jjfs
+brew tap jtippett/jjfs
+brew install jjfs
 ```
 
 ## Usage
