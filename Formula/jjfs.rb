@@ -3,7 +3,7 @@ class Jjfs < Formula
   homepage "https://github.com/jtippett/jjfs"
   version "0.1.0"
   url "https://github.com/jtippett/jjfs.git",
-      revision: "676c92043c05bf45b5b65e5c9f7cc5f1106f670c"
+      revision: "1ebab323b50b2a29c4611bf44a27195d1af302df"
   license "MIT"
 
   depends_on "crystal"
@@ -38,6 +38,10 @@ class Jjfs < Formula
     doc.install "docs/user-guide.md"
   end
 
+  def post_install
+    ohai "jjfs installed successfully!"
+  end
+
   def caveats
     s = <<~EOS
       To get started:
@@ -47,6 +51,10 @@ class Jjfs < Formula
         4. Open a mount: jjfs open default
 
       Note: bindfs requires macFUSE to be installed separately.
+
+      After upgrading, restart the daemon to use the new version:
+        jjfs stop
+        jjfs start
 
       For more information, see:
         #{doc}/README.md
