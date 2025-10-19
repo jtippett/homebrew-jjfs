@@ -1,9 +1,9 @@
 class Jjfs < Formula
   desc "Eventually consistent multi-mount filesystem using Jujutsu"
   homepage "https://github.com/jtippett/jjfs"
-  version "0.2.1"
+  version "0.2.0"
   url "https://github.com/jtippett/jjfs.git",
-      revision: "319dc275c2e3bb08f4a5afa5e93376c5934ca602"
+      revision: "78fc6f9e87df193428d053bc88115c8f0a62c9e4"
   license "MIT"
 
   depends_on "crystal"
