@@ -1,33 +1,38 @@
 class Jjfs < Formula
   desc "Eventually consistent multi-mount filesystem using Jujutsu"
   homepage "https://github.com/jtippett/jjfs"
-  version "0.1.2"
+  version "0.2.1"
   url "https://github.com/jtippett/jjfs.git",
-      revision: "cc8433915acda3f3084a65be9f85801e7212aa5c"
+      revision: "319dc275c2e3bb08f4a5afa5e93376c5934ca602"
   license "MIT"
 
   depends_on "crystal"
   depends_on "jj"
 
+  depends_on "rust" => :build
+
   on_macos do
     depends_on "fswatch"
-  end
-
-  on_linux do
-    depends_on "bindfs"
   end
 
   def install
     # Create bin directory for build
     mkdir_p "bin"
 
-    # Build both binaries
+    # Build Rust NFS server
+    cd "jjfs-nfs" do
+      system "cargo", "build", "--release"
+      cp "target/release/jjfs-nfs", "../bin/"
+    end
+
+    # Build Crystal binaries
     system "crystal", "build", "src/jjfs.cr", "-o", "bin/jjfs", "--release"
     system "crystal", "build", "src/jjfsd.cr", "-o", "bin/jjfsd", "--release"
 
     # Install binaries
     bin.install "bin/jjfs"
     bin.install "bin/jjfsd"
+    bin.install "bin/jjfs-nfs"
 
     # Install templates for service installation
     prefix.install "templates"
@@ -43,14 +48,13 @@ class Jjfs < Formula
   end
 
   def caveats
-    s = <<~EOS
+    <<~EOS
       To get started:
-        1. Install bindfs: brew install --cask macfuse && brew install gromgit/fuse/bindfs-mac
-        2. Install the daemon service: jjfs install
-        3. Initialize a repo: jjfs init
-        4. Open a mount: jjfs open default
+        1. Install the daemon service: jjfs install
+        2. Create a new repo: jjfs new my-notes
+        3. Open a mount: jjfs open my-notes ~/Documents/notes
 
-      Note: bindfs requires macFUSE to be installed separately.
+      Note: Mounting requires sudo password (normal macOS NFS behavior)
 
       After upgrading, restart the daemon to use the new version:
         jjfs stop
@@ -60,26 +64,11 @@ class Jjfs < Formula
         #{doc}/README.md
         #{doc}/user-guide.md
     EOS
-
-    on_linux do
-      s = <<~EOS
-        To get started:
-          1. Install the daemon service: jjfs install
-          2. Initialize a repo: jjfs init
-          3. Open a mount: jjfs open default
-
-        For more information, see:
-          #{doc}/README.md
-          #{doc}/user-guide.md
-      EOS
-    end
-
-    s
   end
 
   test do
     # Test that binaries run and show version
-    assert_match "jjfs v0.1.2", shell_output("#{bin}/jjfs 2>&1")
+    assert_match "jjfs v0.2.1", shell_output("#{bin}/jjfs 2>&1")
 
     # Test init command (in temporary directory)
     system bin/"jjfs", "init", "test-repo"
