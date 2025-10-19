@@ -2,7 +2,7 @@ class Jjfs < Formula
   desc "Eventually consistent multi-mount filesystem using Jujutsu"
   homepage "https://github.com/jtippett/jjfs"
   url "https://github.com/jtippett/jjfs/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "57e1941ef9d4e42ddb6a8919509baf990a299da27b321b7829c65b07c2648eb2"
+  sha256 "c0535b95c7ecaa43492305fb98218ca7080310b0581c4b9cdfdd998b30d8fb2a"
   license "MIT"
 
   depends_on "crystal"
